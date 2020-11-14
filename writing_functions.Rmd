@@ -31,3 +31,35 @@ x_vec = rnorm(30, mean = 5, sd = 3)
 ```
 ```
 
+
+I want a function to compute z-scores
+```{r}
+z_scores = function(x) {
+  
+  z = (x - mean(x)) / sd(x)
+  z
+  
+}
+
+z_scores(x_vec)
+```
+
+```{r}
+z_scores(sample(c(TRUE, FALSE), 25, replace = TRUE))
+```
+
+```{r}
+z_scores = function(x) {
+  
+  if (!is.numeric(x)) {
+    stop("Argument x should be numeric")
+  } else if (length(x) == 1) {
+    stop("Z scores cannot be computed for length 1 vectors")
+  }
+  
+  z = mean(x) / sd(x)
+  
+  z
+}
+```
+
