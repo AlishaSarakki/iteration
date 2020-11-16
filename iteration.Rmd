@@ -160,3 +160,60 @@ listcol_df %>%
          medians = map_dbl(samp, median))
 ```
 
+## Weather Data
+
+```{r}
+weather_df = 
+  rnoaa::meteo_pull_monitors(
+    c("USW00094728", "USC00519397", "USS0023B17S"),
+    var = c("PRCP", "TMIN", "TMAX"), 
+    date_min = "2017-01-01",
+    date_max = "2017-12-31") %>%
+  mutate(
+    name = recode(
+      id, 
+      USW00094728 = "CentralPark_NY", 
+      USC00519397 = "Waikiki_HA",
+      USS0023B17S = "Waterhole_WA"),
+    tmin = tmin / 10,
+    tmax = tmax / 10) %>%
+  select(name, id, everything())
+```
+
+```{r}
+weather_nest = 
+  nest(weather_df, data = date:tmin)
+
+weather_nest
+```
+
+```{r}
+weather_nest %>%  pull(name)
+weather_nest %>% pull(data)
+
+weather_nest$data
+```
+
+
+
+
+
+```{r}
+weather_lm = function(df) {
+  lm(tmax ~ tmin, data = df)
+}
+weather_lm(weather_nest$data[[1]])
+
+weather_nest = 
+  weather_nest %>% 
+  mutate(models = map(data, weather_lm))
+
+weather_nest
+```
+
+Let's write a function.
+
+```{r}
+
+```
+
