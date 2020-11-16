@@ -1,5 +1,5 @@
 ---
-title: "Iteration Live"
+title: "Homework 5"
 output: github_document
 ---
 ```{r setup, include = FALSE}
@@ -24,4 +24,13 @@ scale_fill_discrete = scale_fill_viridis_d
 ```
 
 
+
+## Problem 1
+
+Read in the data.
+
+```{r}
+homicide_df = 
+  read_csv("data/homicide-data.csv")
+```
 
